@@ -1,13 +1,13 @@
 module instruction_fetch (
     input clk,
-    input [31:0] datain,
-    input write,
     output [31:0] output_if
 );
     wire [31:0] output_;
     wire [9:0] address;
+    reg [31:0] datain=32'b0;
+    reg write =1'b0;
     instruction_memory a1(clk,address,datain,write,output_);
-    master_slave_register a2(clk,output_,output_if);
+    master_slave_register1 a2(clk,output_,output_if);
     program_counter a3(clk,address);
 endmodule
 
@@ -42,7 +42,7 @@ module program_counter(
     end
 endmodule
 
-module master_slave_register (
+module master_slave_register1 (
     input clk,
     input [31:0] datain,
     output reg [31:0] dataout
